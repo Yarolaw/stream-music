@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Detail = ({album, artists, name}) => {
+const Detail = ({ album, artists, name }) => {
   return (
     <div className="offset-md-1 col-sm-4" >
             <div className="row col-sm-12 px-0">

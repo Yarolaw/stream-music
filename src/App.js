@@ -4,6 +4,7 @@ import { Credentials } from './Credentials';
 import Dropdown from './components/Dropdown'
 import ListBox from './components/ListBox';
 import Detail from './components/Detail';
+import Player from './components/Player';
 
 const App = () => {
   const [token, setToken] = useState('')
@@ -40,7 +41,10 @@ useEffect(() => {
 
   });
 
-}, [genres.selectedGenre, spotify.ClientId, spotify.ClientSecret]); 
+  console.log('trackDetail', trackDetail);
+  console.log('trackDetail?.uri', trackDetail?.uri);
+  
+}, [genres.selectedGenre, spotify.ClientId, spotify.ClientSecret, trackDetail]); 
 
 const genreChanged = val => {
   setGenres({
@@ -94,7 +98,31 @@ const listboxClicked = val => {
   const trackInfo = currentTracks.filter(t => t.track.id === val);
 
   setTrackDetail(trackInfo[0].track);
+
+  console.log('currentTracks', currentTracks);
 }
+  
+  const audioList1 = [
+  {
+    name: 'Despacito',
+    singer: 'Luis Fonsi',
+    cover:
+      'http://res.cloudinary.com/alick/image/upload/v1502689731/Despacito_uvolhp.jpg',
+    musicSrc:
+      'http://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3',
+    // support async fetch music src. eg.
+    // musicSrc: async () => {
+    //   return await fetch('/api')
+    // },
+  },
+  {
+    name: 'Dorost Nemisham',
+    singer: 'Sirvan Khosravi',
+    cover:
+      'https://res.cloudinary.com/ehsanahmadi/image/upload/v1573758778/Sirvan-Khosravi-Dorost-Nemisham_glicks.jpg',
+    musicSrc: trackDetail ? trackDetail?.uri : '',
+  },
+]
 
   return (
     <div className="container">
@@ -111,6 +139,8 @@ const listboxClicked = val => {
             {trackDetail && <Detail {...trackDetail} /> }
           </div>        
       </form>
+
+      <Player quietUpdate glassBg showMediaSession audioLists={audioList1}/>
     </div>
     
   )
